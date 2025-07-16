@@ -11,4 +11,15 @@ RUN cmake .. && \
     make install && \
     make clean
 
+# Build the grpc4bmi server for the `heatc` model.
+COPY heatc-grpc4bmi-server /opt
+WORKDIR /opt/heatc-grpc4bmi-server/_build
+RUN cmake .. && \
+    make && \
+    make install && \
+    make clean
+
 WORKDIR /opt
+
+ENTRYPOINT ["/usr/local/bin/heatc-grpc4bmi-server"]
+EXPOSE 55555
