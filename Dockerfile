@@ -12,7 +12,7 @@ RUN cmake .. && \
     make clean
 
 # Build the grpc4bmi server for the `heatc` model.
-COPY heatc-grpc4bmi-server /opt
+COPY heatc-grpc4bmi-server /opt/heatc-grpc4bmi-server
 WORKDIR /opt/heatc-grpc4bmi-server/_build
 RUN cmake .. && \
     make && \
