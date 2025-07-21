@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(bmi-example-c-grpc4bmi
   VERSION 0.1.0
-  LANGUAGES C
+  LANGUAGES CXX
 )
 
 include(GNUInstallDirs)
@@ -27,6 +27,7 @@ set(server_exe heatc-grpc4bmi-server)
 add_executable(${server_exe} ${server_exe}.c)
 target_link_libraries(${server_exe} ${BMIHEATC_LINK_LIBRARIES} ${PROTOBUF_LINK_LIBRARIES} ${GRPC4BMI_LINK_LIBRARIES})
 target_include_directories(${server_exe} PUBLIC ${GRPC4BMI_INCLUDE_DIRS})
+set_target_properties(${server_exe} PROPERTIES LINKER_LANGUAGE CXX)
 
 install(
   TARGETS ${server_exe}
