@@ -13,7 +13,6 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(BMIHEATC REQUIRED IMPORTED_TARGET bmiheatc)
 message(STATUS "  Include dir: ${BMIHEATC_INCLUDE_DIRS}")
 message(STATUS "  Library path: ${BMIHEATC_LINK_LIBRARIES}")
-include_directories(${BMIHEATC_INCLUDE_DIRS})
 
 pkg_check_modules(PROTOBUF REQUIRED IMPORTED_TARGET protobuf)
 message(STATUS "  Include dir: ${PROTOBUF_INCLUDE_DIRS}")
@@ -27,6 +26,7 @@ set(server_exe heatc-grpc4bmi-server)
 
 add_executable(${server_exe} ${server_exe}.c)
 target_link_libraries(${server_exe} ${BMIHEATC_LINK_LIBRARIES} ${PROTOBUF_LINK_LIBRARIES} ${GRPC4BMI_LINK_LIBRARIES})
+target_include_directories(${server_exe} PUBLIC ${GRPC4BMI_INCLUDE_DIRS})
 
 install(
   TARGETS ${server_exe}
