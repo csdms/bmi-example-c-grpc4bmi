@@ -19,6 +19,8 @@ RUN cmake .. && \
     make install && \
     make clean
 
+RUN ldconfig
+
 WORKDIR /opt
 
 ENTRYPOINT ["/usr/local/bin/heatc-grpc4bmi-server"]
