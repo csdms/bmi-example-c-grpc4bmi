@@ -1,5 +1,5 @@
-# grpc4bmi server for `HeatC` model from bmi-example-c.
-FROM csdms/grpc4bmi
+# grpc4bmi server for the `HeatC` model from bmi-example-c.
+FROM mdpiper/grpc4bmi-154
 
 LABEL maintainer="Mark Piper <mark.piper@colorado.edu>"
 
@@ -12,7 +12,7 @@ RUN cmake .. && \
     make clean
 
 # Build the grpc4bmi server for the `heatc` model.
-COPY heatc-grpc4bmi-server /opt/heatc-grpc4bmi-server
+COPY server /opt/heatc-grpc4bmi-server
 WORKDIR /opt/heatc-grpc4bmi-server/_build
 RUN cmake .. && \
     make && \
