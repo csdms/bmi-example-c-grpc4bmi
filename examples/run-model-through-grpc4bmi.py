@@ -2,7 +2,7 @@
 # Run the C `Heat` model in Python through [grpc4bmi](https://grpc4bmi.readthedocs.io).
 # 
 # `Heat` models the diffusion of temperature on a uniform rectangular plate with Dirichlet boundary conditions.
-# View the model source code and its BMI at https://github.com/csdms/bmi-example-cxx.
+# View the model source code and its BMI at https://github.com/csdms/bmi-example-c.
 
 # Start by importing some helper libraries.
 import os
@@ -16,7 +16,7 @@ from grpc4bmi.bmi_client_docker import BmiClientDocker
 # * which Docker image to use,
 # * the port exposed through the image, and
 # * the location in the image of the configuration file used for the model.
-DOCKER_IMAGE = "mdpiper/bmi-example-c-grpc4bmi-154"
+DOCKER_IMAGE = "csdms/bmi-example-c-grpc4bmi"
 BMI_PORT = 55555
 CONFIG_FILE = pathlib.Path("/opt/bmi-example-c") / "testing" / "config.txt"
 
