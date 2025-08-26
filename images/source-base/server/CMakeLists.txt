@@ -31,7 +31,11 @@ list(POP_BACK CMAKE_MESSAGE_INDENT)
 set(server_exe heatc-grpc4bmi-server)
 
 add_executable(${server_exe} ${server_exe}.cxx)
-target_link_libraries(${server_exe} ${BMIHEATC_LINK_LIBRARIES} ${PROTOBUF_LINK_LIBRARIES} ${GRPC4BMI_LINK_LIBRARIES})
+target_link_libraries(${server_exe}
+  ${BMIHEATC_LINK_LIBRARIES}
+  ${PROTOBUF_LINK_LIBRARIES}
+  ${GRPC4BMI_LINK_LIBRARIES}
+)
 target_include_directories(${server_exe} PUBLIC ${GRPC4BMI_INCLUDE_DIRS})
 
 install(
