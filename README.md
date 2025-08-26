@@ -2,27 +2,45 @@
 
 Set up a [grpc4bmi](https://grpc4bmi.readthedocs.io) server
 to run a containerized version
-of the [Basic Model Interface](https://bmi.readthedocs.io)
+of the [Basic Model Interface](https://bmi.readthedocs.io) (BMI)
 [C example](https://github.com/csdms/bmi-example-c)
 through Python.
 
 ## Build
 
+There are two options for building this project:
+
+1. from a base image, [source-base](./images/source-base/), where grpc and its dependent libraries, grpc4bmi, and the BMI C example are all built from source
+1. from a base image, [conda-base](./images/conda-base/), where grpc and its dependent libraries are installed through conda-forge, the BMI C example is installed from a separate conda-based Docker image, and grpc4bmi is built from source
+
+In each case, the grpc4bmi server is exposed through port 55555.
+
+### source-base
+
 Build this example locally with:
 ```
-docker build --tag bmi-example-c-grpc4bmi .
+docker build --tag bmi-example-c-grpc4bmi images/source-base
 ```
-The image is built on the [mdpiper/grpc4bmi-154](https://hub.docker.com/r/mdpiper/grpc4bmi-154) base image.
+The image is (temporarily) built on the [mdpiper/grpc4bmi](https://hub.docker.com/r/mdpiper/grpc4bmi) base image.
 The OS is Linux/Ubuntu.
 The C BMI example, grpc4bmi, and the grpc4bmi server are installed in `/usr/local`.
-The server is exposed through port 55555.
+
+### conda-base
+
+Build this example locally with:
+```
+docker build --tag bmi-example-c-grpc4bmi images/conda-base
+```
+The image is built on the [csdms/grpc4bmi](https://hub.docker.com/r/csdms/grpc4bmi) base image,
+which is built on the [condaforge/miniforge3](https://hub.docker.com/r/condaforge/miniforge3) base image.
+The OS is Linux/Ubuntu.
+The C BMI example, grpc4bmi, and the grpc4bmi server are installed in `/opt/conda`.
 
 ## Run
 
-Use the grpc4bmi [Docker client](https://grpc4bmi.readthedocs.io/en/latest/container/usage.html#docker)
-to access the BMI methods of the containerized model.
+Use the grpc4bmi Docker client to access the BMI methods of the containerized model.
 
-Install grpc4bmi with *pip*:
+Install with *pip*:
 ```
 pip install grpc4bmi
 ```
@@ -38,10 +56,27 @@ del m  # stop container cleanly
 ```
 
 If the image isn't found locally, it's pulled from Docker Hub
-(e.g., try the `mdpiper/bmi-example-c-grpc4bmi-154` image).
+(e.g., try the `csdms/bmi-example-c-grpc4bmi` image).
 
 For more in-depth examples of running the *Heat* model through grpc4bmi,
 see the [examples](./examples) directory.
+
+## Developer notes
+
+A versioned, multiplatform image built from the *conda-base* image in this repository is hosted on Docker Hub
+at [csdms/bmi-example-c-grpc4bmi](https://hub.docker.com/r/csdms/bmi-example-c-grpc4bmi).
+This image is automatically built and pushed to Docker Hub
+with the [release](./.github/workflows/release.yml) CI workflow.
+The workflow is only run when the repository is tagged.
+To manually build and push an update, run:
+```
+docker buildx build --platform linux/amd64,linux/arm64 -t csdms/bmi-example-c-grpc4bmi:latest --push .
+```
+A user can pull this image from Docker Hub with:
+```
+docker pull csdms/bmi-example-c-grpc4bmi
+```
+optionally with the `latest` tag or with a version tag.
 
 ## Acknowledgment
 
